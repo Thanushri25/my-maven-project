@@ -1,0 +1,41 @@
+diff --git a/src/main/java/com/example/my_maven_project/App.java b/src/main/java/com/example/my_maven_project/App.java
+index cafa4dd..9b92cd6 100644
+--- a/src/main/java/com/example/my_maven_project/App.java
++++ b/src/main/java/com/example/my_maven_project/App.java
+@@ -1,10 +1,30 @@
+ package com.example.my_maven_project;
+ 
+-/**
+- * Hello world!
+- */
++import java.util.Properties;
++
+ public class App {
+     public static void main(String[] args) {
+-        System.out.println("Hello World!");
++
++        try {
++            Properties properties = new Properties();
++
++            var input = App.class
++                    .getClassLoader()
++                    .getResourceAsStream("config.properties");
++
++            properties.load(input);
++
++            System.out.println("App Name: "
++                    + properties.getProperty("app.name"));
++
++            System.out.println("App Version: "
++                    + properties.getProperty("app.version"));
++            System.out.println("Patch applied successfully!");
++
++            input.close();
++
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
+     }
+-}
++}
+\ No newline at end of file
